@@ -1,0 +1,35 @@
+﻿@model IEnumerable<BugTracker.Models.RolesViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Assign a Role To Registered Users</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr style="color:orange">
+        <th>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </th>
+        <th>
+            Action
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleName)
+        </td>
+        <td>
+            @Html.ActionLink("Assign Users", "AssignToRole", "RoleManager", new { id = item.RoleId }, null) |
+            @Html.ActionLink("View / Unassign users", "RemoveFromRole", "RoleManager", new {  id=item.RoleId  }, null) 
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BugTracker.Models.ProjectUserViewModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Assign/Remove Projects to Developers Or Managers</h2>
+
+<table class="table">
+    <tr style="color:orange">
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+        {
+        <th>
+            Project Manager Action
+        </th>
+        }
+        
+        @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Project Manager"))
+        {
+            <th>
+                Developer Action
+            </th>
+        }
+    </tr>
+
+
+
+@foreach (var item in Model) {
+    <tr>
+        <td style="color:orange">
+            @Html.DisplayFor(modelItem => item.ProjectId)
+        </td>
+        <td style="color:steelblue; font-size:larger">
+            @Html.DisplayFor(modelItem => item.ProjectName)
+        </td>
+@if (ViewContext.HttpContext.User.IsInRole("Admin"))
+{
+        <td>
+                @Html.ActionLink("Assign Project Manager", "AssignPmProjects", "ProjectManager", new { id = item.ProjectId }, null) ||
+                @Html.ActionLink("View / Unassign Project Manager", "RemovePmProjects", "ProjectManager", new { id = item.ProjectId }, null)
+        </td>
+}
+@if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Project Manager"))
+{
+        <td>
+                @Html.ActionLink("Assign Developer", "AssignUserProjects", "ProjectManager", new { id = item.ProjectId }, null)  ||
+                @Html.ActionLink("View / Unassign Developer", "RemoveUserProjects", "ProjectManager", new { id = item.ProjectId }, null)
+        </td>
+}
+    </tr>
+}
+
+</table>
