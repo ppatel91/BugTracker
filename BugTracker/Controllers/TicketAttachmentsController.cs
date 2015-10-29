@@ -39,7 +39,7 @@ namespace BugTracker.Controllers
         // GET: TicketAttachments/Create
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "AssignedToUserId");
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title"); //instead of title asigneduser was there
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "AssignedToUserId", ticketAttachments.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachments.TicketId);
             return View(ticketAttachments);
         }
 
@@ -73,7 +73,7 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "AssignedToUserId", ticketAttachments.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachments.TicketId); //AssignedUser=> Title
             return View(ticketAttachments);
         }
 
@@ -90,7 +90,7 @@ namespace BugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "AssignedToUserId", ticketAttachments.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachments.TicketId); //Title => AssignedUser
             return View(ticketAttachments);
         }
 

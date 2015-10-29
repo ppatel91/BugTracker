@@ -24,13 +24,13 @@ namespace BugTracker.Models
         public Nullable <int> TicketPriorityId { get; set; }
         public int TicketStatusId { get; set; }
         public string OwnerUserId { get; set; }
-        public string AssignedToUserId { get; set; }
+        public string AssignedUserId { get; set; }
         public string UpdateReason { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy, hh.mm tt}", ApplyFormatInEditMode = true)]
         public DateTimeOffset Created { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy, hh.mm tt}", ApplyFormatInEditMode = true)]
         public DateTimeOffset Updated { get; set; }
 
         public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
@@ -44,6 +44,6 @@ namespace BugTracker.Models
 
 
         public virtual ApplicationUser OwnerUser { get; set; }
-        public virtual ApplicationUser AssignedToUser { get; set; }
+        public virtual ApplicationUser AssignedUser { get; set; }
     }
 }

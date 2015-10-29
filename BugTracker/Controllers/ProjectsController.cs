@@ -15,12 +15,14 @@ namespace BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Projects
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Projects.ToList());
         }
 
         // GET: Projects/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)

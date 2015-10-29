@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Ticket.AssignedToUserId)
+            @Html.DisplayNameFor(model => model.Ticket.AssignedUser)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FilePath)
@@ -35,7 +35,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Ticket.AssignedToUserId)
+            @Html.DisplayFor(modelItem => item.Ticket.AssignedUser)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FilePath)
