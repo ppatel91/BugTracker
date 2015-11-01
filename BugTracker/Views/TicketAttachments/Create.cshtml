@@ -6,40 +6,49 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+    @Html.HiddenFor(model => model.TicketId)
+
     <div class="form-horizontal">
-        <h4>TicketAttachments</h4>
+        <h4>Ticket Attachments</h4>
         <hr />
+        @*@if (@Html.DisplayFor(model => model.FileUrl) != null)
+        {
+            <div class="col-md-7"><p>@Html.DisplayFor(model => model.FileUrl)</p></div>
+            <div class="col-md-5">
+                <img src="@Model.FileUrl" class="img-responsive" alt="@Html.DisplayFor(model => model.FileUrl)" />
+            </div>
+        }*@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.TicketId, "TicketId", htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.EditorFor(model => model.TicketId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TicketId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.TicketId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TicketId, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.FileUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FilePath, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
+                <input type="file" id="image" name="image" value="" />
+                @Html.EditorFor(model => model.FileUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model., "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.EditorFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
@@ -47,18 +56,24 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
+        </div>*@
+
+        <div class="row">
+            @Html.Label("Attach File:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" >
+                <input type="file" value="Choose File" id="attachment" name="attachment" class="btn btn-default" />
+            </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FileUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Attachment Description", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FileUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FileUrl, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.Description, 8, 100, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
@@ -71,5 +86,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Ticket", "Details", "Tickets", new { id = Model.TicketId }, null)
 </div>

@@ -16,7 +16,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ticket.AssignedUser)
+            @Html.DisplayFor(model => model.Ticket.AssignedUser.FirstName)
         </dd>
 
         <dt>
@@ -44,11 +44,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.User)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UserId)
+            @Html.DisplayFor(model => model.User.FirstName)
         </dd>
 
         <dt>

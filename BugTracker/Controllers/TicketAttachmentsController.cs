@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
+using System.IO;
 
 namespace BugTracker.Controllers
 {
@@ -37,10 +38,14 @@ namespace BugTracker.Controllers
         }
 
         // GET: TicketAttachments/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title"); //instead of title asigneduser was there
-            return View();
+            var attachment = new TicketAttachment();
+            attachment.UserId = db.Users.SingleOrDefault(u => u.UserName == User.Identity.Name).Id;
+            //attachment.TicketId = id;
+
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title"); //instead of title asigneduser was there
+            return View(attachment);
         }
 
         // POST: TicketAttachments/Create
@@ -48,16 +53,31 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,FilePath,Description,Created,UserId,FileUrl")] TicketAttachment ticketAttachments)
+        public ActionResult Create([Bind(Include = "Id,TicketId,FilePath,Description,Created,UserId,FileUrl")] TicketAttachment ticketAttachments, HttpPostedFileBase attachment)
         {
             if (ModelState.IsValid)
             {
-                db.TicketAttachments.Add(ticketAttachments);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (attachment != null && attachment.ContentLength > 0)
+                {
+                    //relative server path
+                    var filePath = "/App_Data/Uploads/";
+                    //path on physical drive on server
+                    var absPath = Server.MapPath("~" + filePath);
+                    //media Url for relative Path
+                    ticketAttachments.FileUrl = filePath + attachment.FileName;
+                    //save image
+                    attachment.SaveAs(Path.Combine(absPath, attachment.FileName));
+                }
+
+                    ticketAttachments.Created = DateTimeOffset.Now;
+                    db.TicketAttachments.Add(ticketAttachments);
+                    db.SaveChanges();
+                    return RedirectToAction("Details", "Tickets", new { id = ticketAttachments.TicketId });
+
             }
 
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachments.TicketId);
+            ViewBag.TicketId = ticketAttachments.TicketId;
             return View(ticketAttachments);
         }
 

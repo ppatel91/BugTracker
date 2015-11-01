@@ -37,10 +37,15 @@ namespace BugTracker.Controllers
         }
 
         // GET: TicketComments/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title"); //Title=>AssignedUser
-            return View();
+            var comment = new TicketComment();
+            comment.UserId = db.Users.SingleOrDefault(u => u.UserName == User.Identity.Name).Id;
+            comment.TicketId = id;
+
+
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title"); //Title=>AssignedUser
+            return View(comment);
         }
 
         // POST: TicketComments/Create
@@ -52,9 +57,10 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                ticketComments.Created = new System.DateTimeOffset(DateTime.Now);
                 db.TicketComments.Add(ticketComments);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Tickets", new { id = ticketComments.TicketId});
             }
 
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComments.TicketId); //Title=>AssignedUser
