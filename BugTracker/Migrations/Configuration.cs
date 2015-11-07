@@ -102,7 +102,10 @@ namespace BugTracker.Migrations
                 }, "Abc&123!");
                 var userId = userManager.FindByEmail("araynor@coderfoundry.com").Id;
                 userManager.AddToRole(userId, "Project Manager");
+
             }
+
+
         }
     }
 }

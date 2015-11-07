@@ -13,7 +13,6 @@ namespace BugTracker.Models
             this.TicketAttachments = new HashSet<TicketAttachment>();
             this.TicketComments = new HashSet<TicketComment>();
             this.TicketHistories = new HashSet<TicketHistory>();
-            this.TicketNotifications = new HashSet<TicketNotification>();
 
         }
         public int Id { get; set; }
@@ -27,16 +26,15 @@ namespace BugTracker.Models
         public string AssignedUserId { get; set; }
         public string UpdateReason { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy, hh.mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy, hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTimeOffset Created { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy, hh.mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy, hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTimeOffset Updated { get; set; }
 
         public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
         public virtual ICollection<TicketComment> TicketComments  { get; set; }
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }
-        public virtual ICollection<TicketNotification> TicketNotifications { get; set; }
         public virtual Project Project { get; set; }
         public virtual TicketPriority TicketPriority { get; set; }
         public virtual TicketStatus TicketStatus { get; set; }

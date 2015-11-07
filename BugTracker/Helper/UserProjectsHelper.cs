@@ -129,7 +129,7 @@ namespace BugTracker.Helper
 
 
         //return list of ProjectManagers assigned to a single project
-        public ICollection<ApplicationUser> ListProjectManagers(int projectId)
+        public ApplicationUser ListProjectManagers(int projectId)
         {
 
             //get user role id
@@ -137,9 +137,10 @@ namespace BugTracker.Helper
             //get all users assigned to project
             var users = db.Projects.Find(projectId).Users;
             //restrict list to developers only
-            var pM = users.Where(user => user.Roles.Any(role => role.RoleId == roleId));
+            var pm = users.FirstOrDefault(user => user.Roles.Any(role => role.RoleId == roleId));
+            //var pM = users.Where(user => user.Roles.Any(role => role.RoleId == roleId));
             //return the list of devs
-            return pM.ToList();
+            return pm;
         }
 
         //return list of ProjectManagers not assigned to project

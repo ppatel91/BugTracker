@@ -42,7 +42,7 @@ namespace BugTracker.Controllers
         {
             var attachment = new TicketAttachment();
             attachment.UserId = db.Users.SingleOrDefault(u => u.UserName == User.Identity.Name).Id;
-            //attachment.TicketId = id;
+            attachment.TicketId = id;
 
             //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title"); //instead of title asigneduser was there
             return View(attachment);
@@ -59,8 +59,9 @@ namespace BugTracker.Controllers
             {
                 if (attachment != null && attachment.ContentLength > 0)
                 {
+                    
                     //relative server path
-                    var filePath = "/App_Data/Uploads/";
+                    var filePath = "/Attachments/Images/";
                     //path on physical drive on server
                     var absPath = Server.MapPath("~" + filePath);
                     //media Url for relative Path
@@ -71,7 +72,8 @@ namespace BugTracker.Controllers
 
                     ticketAttachments.Created = DateTimeOffset.Now;
                     db.TicketAttachments.Add(ticketAttachments);
-                    db.SaveChanges();
+                    
+                db.SaveChanges();
                     return RedirectToAction("Details", "Tickets", new { id = ticketAttachments.TicketId });
 
             }

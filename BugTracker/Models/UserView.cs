@@ -38,15 +38,15 @@ namespace BugTracker.Models
         public List<string> UserRoles { get; set; }
 
         [Display(Name = "Assigned Projects")]
-        public List<string> UserProjects { get; set; }
+        public List<Project> UserProjects { get; set; }
 
         [Display(Name = "Display Name")]
-        public List<string> TicketsOwned { get; set; }
+        public List<Ticket> TicketsOwned { get; set; }
 
         [Display(Name = "Display Name")]
-        public List<string> TicketsAssigned { get; set; }
+        public List<Ticket> TicketsAssigned { get; set; }
 
-
+        public List<TicketHistory> TicketNotifications { get; set; }
 
     }
 }

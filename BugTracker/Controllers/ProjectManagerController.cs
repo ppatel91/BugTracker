@@ -33,7 +33,7 @@ namespace BugTracker.Controllers
 
 
         // GET: ProjectManager/AssignUsers/Developers
-        [Authorize (Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin, Project Manager")]
         public ActionResult AssignUserProjects(int id)
         {
             var project = db.Projects.Find(id);
@@ -102,13 +102,23 @@ namespace BugTracker.Controllers
         //@@@@@@@@@@@@@@@@@@@@@@@ PROJECT MANAGERS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         // GET: ProjectManager/AssignPROJECTMANAGERS
-     //   [Authorize(Roles = "Admin")]
+        //   [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Admin")]
         public ActionResult AssignPmProjects(int id)
         {
             var project = db.Projects.Find(id);
             var model = new ProjectUserViewModels { ProjectId = id, ProjectName = project.Name };
             var userProjectList = helper.ListPManagerNotAssigned(id);
+            var pm = helper.ListProjectManagers(id);
+
+            if (pm == null)
+            {
+                model.ProjectManager = "Unassigned";
+            }
+            else
+            {
+                model.ProjectManager = pm.DisplayName;
+            }
 
             model.Users = new SelectList(userProjectList.OrderBy(m => m.DisplayName), "Id", "DisplayName", null);
 
@@ -117,7 +127,7 @@ namespace BugTracker.Controllers
 
         //Post: ProjectManager/AssignPROJECTMANAGERS
         [HttpPost]
-      //  [Authorize(Roles = "Admin")]
+        //  [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult AssignPmProjects(ProjectUserViewModels model)
@@ -128,8 +138,11 @@ namespace BugTracker.Controllers
                 {
                     foreach (string userId in model.SelectedUsers)
                     {
-                        var pmId = helper.ListProjectManagers(model.ProjectId);
-                        helper.RemovePmFromProject(userId, model.ProjectId);
+                        var temp = helper.ListProjectManagers(model.ProjectId);
+                        if(temp != null)
+                        {
+                        helper.RemovePmFromProject(temp.Id, model.ProjectId);
+                        }
                         helper.AssignUserToProject(model.SelectedUsers[0], model.ProjectId);
                     }
                 }
@@ -139,45 +152,45 @@ namespace BugTracker.Controllers
         }
 
 
-        // GET: ProjectManager/RemovePROJECTMANAGERS
-        [Authorize(Roles = "Admin")]
-        public ActionResult RemovePmProjects(int id)
-        {
-            var project = db.Projects.Find(id);
-            var model = new ProjectUserViewModels { ProjectId = id, ProjectName = project.Name };
-            var userProjectList = helper.ListProjectManagers(id);
+        //  // GET: ProjectManager/RemovePROJECTMANAGERS
+        //  [Authorize(Roles = "Admin")]
+        //  public ActionResult RemovePmProjects(int id)
+        //  {
+        //      var project = db.Projects.Find(id);
+        //      var model = new ProjectUserViewModels { ProjectId = id, ProjectName = project.Name };
+        //      var userProjectList = helper.ListProjectManagers(id);
 
-            model.Users = new MultiSelectList(userProjectList.OrderBy(m => m.DisplayName), "Id", "DisplayName", null);
+        //      model.Users = new MultiSelectList(userProjectList.OrderBy(m => m.DisplayName), "Id", "DisplayName", null);
 
-            return View(model);
-        }
+        //      return View(model);
+        //  }
 
-        //Post: ProjectManager/RemovePROJECTMANAGERS
-        [HttpPost]
-      //  [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Admin")]
-        [ValidateAntiForgeryToken]
-        public ActionResult RemovePmProjects(ProjectUserViewModels model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (model.SelectedUsers != null)
-                {
-                    foreach (string userId in model.SelectedUsers)
-                    {
-                        helper.RemovePmFromProject(userId, model.ProjectId);
-                    }
-                }
-                return RedirectToAction("Index", "ProjectManager");
-            }
-            return View(model);
-        }
-      
-    
-    
-    
-    
-    
-    
+        //  //Post: ProjectManager/RemovePROJECTMANAGERS
+        //  [HttpPost]
+        ////  [Authorize(Roles = "Admin")]
+        //  [Authorize(Roles = "Admin")]
+        //  [ValidateAntiForgeryToken]
+        //  public ActionResult RemovePmProjects(ProjectUserViewModels model)
+        //  {
+        //      if (ModelState.IsValid)
+        //      {
+        //          if (model.SelectedUsers != null)
+        //          {
+        //              foreach (string userId in model.SelectedUsers)
+        //              {
+        //                  helper.RemovePmFromProject(userId, model.ProjectId);
+        //              }
+        //          }
+        //          return RedirectToAction("Index", "ProjectManager");
+        //      }
+        //      return View(model);
+        //  }
+
+
+
+
+
+
+
     }
 }

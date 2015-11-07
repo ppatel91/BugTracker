@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="AzureConnection-Web.config Connection String" description="AzureConnection Connection String used in web.config by the application to access the database." defaultValue="Server=coderfoundry.cloudapp.net,55555;Database=ppatel-bugtracker; User ID=ppatel;Password=PtlAz*123!;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;TrustServerCertificate=True;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\P2K\\documents\\visual\ studio\ 2013\\Projects\\BugTracker\\BugTracker\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='AzureConnection']/@connectionString" />
+  </parameter>
+</parameters>

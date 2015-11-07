@@ -7,6 +7,13 @@ using System.Web;
 namespace BugTracker.Models
 {
 
+    public class ProjectViewModel
+    {
+        public int id { get; set; }
+        public string projectName { get; set; }
+        public string PName { get; set; }
+    }
+
     public class ProjectUsersView
     {
         public string ProjectId { get; set; }

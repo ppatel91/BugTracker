@@ -196,6 +196,7 @@
     <Compile Include="Controllers\RoleManagerController.cs" />
     <Compile Include="Controllers\TicketAttachmentsController.cs" />
     <Compile Include="Controllers\TicketCommentsController.cs" />
+    <Compile Include="Controllers\TicketHistoriesController.cs" />
     <Compile Include="Controllers\TicketPrioritiesController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TicketStatusesController.cs" />
@@ -215,7 +216,6 @@
     <Compile Include="Models\TicketAttachments.cs" />
     <Compile Include="Models\TicketComments.cs" />
     <Compile Include="Models\TicketHistories.cs" />
-    <Compile Include="Models\TicketNotifications.cs" />
     <Compile Include="Models\TicketPriorities.cs" />
     <Compile Include="Models\Tickets.cs" />
     <Compile Include="Models\TicketStatuses.cs" />
@@ -273,6 +273,8 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\tesh-bugtracker.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -303,7 +305,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -370,10 +372,16 @@
     <Content Include="Views\RoleManager\RemoveFromRole.cshtml" />
     <Content Include="Views\RoleManager\Index.cshtml" />
     <Content Include="Views\ProjectManager\Index.cshtml" />
+    <Content Include="Views\TicketHistories\Create.cshtml" />
+    <Content Include="Views\TicketHistories\Delete.cshtml" />
+    <Content Include="Views\TicketHistories\Details.cshtml" />
+    <Content Include="Views\TicketHistories\Edit.cshtml" />
+    <Content Include="Views\TicketHistories\Index.cshtml" />
+    <Content Include="Views\Home\Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Uploads\" />
-    <Folder Include="Attachments\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Attachments\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

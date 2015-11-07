@@ -7,18 +7,52 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
+using BugTracker.Helper;
 
 namespace BugTracker.Controllers
 {
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserProjectsHelper helper1 = new UserProjectsHelper();
+
 
         // GET: Projects
         [Authorize]
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            List<Project> projects;
+            var model = new List<ProjectViewModel>();
+
+            if (!User.IsInRole("Admin"))
+            {
+                projects = db.Users.SingleOrDefault(u => u.UserName == User.Identity.Name).Projects.ToList();
+            }
+            else
+            {
+                projects = db.Projects.ToList();
+            }
+
+            foreach(var p in projects)
+            {
+                var temp = new ProjectViewModel
+                    {
+                        id = p.Id,
+                        projectName = p.Name,
+                    };
+                var pm = helper1.ListProjectManagers(p.Id);
+                if (pm == null)
+                {
+                    temp.PName = "Unassigned";
+                }
+                else
+                {
+                    temp.PName = pm.DisplayName;
+                }
+                model.Add(temp);
+            }
+
+            return View(model);
         }
 
         // GET: Projects/Details/5

@@ -1,0 +1,62 @@
+﻿@model BugTracker.Models.UserView
+
+<div style="padding-top:50px">
+    <h4>Notifications</h4>
+    <hr />
+    <table id="NotifyT">
+        <thead>
+            <tr>
+                <th>
+                    Ticket ID
+                </th>
+                <th>
+                    Property
+                </th>
+                <th>
+                    Update
+                </th>
+                <th>
+                    Date
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TicketNotifications)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ticket.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Changed)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Mark as Seen", "MarkNotificationSeen", "Tickets", new { id = item.Id }, null) |
+                        @Html.ActionLink("View", "Details", "Tickets", new { id = item.TicketId }, null)
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div class="btn btn-primary">
+    @Html.ActionLink("See All Notifications", "Index", "TicketHistories")
+    </div>
+</div>
+
+
+
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
+
+<script>$('#NotifyT').DataTable();</script>
